@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bio-Mimetic Turtle Guidance System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                        url('https://artsci.tamu.edu/news/2022/11/_news-images/olive-ridley-sea-turtle-getty.jpg') center/cover; /* Removed extra space */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #007acc, #00a8ff);
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 122, 204, 0.3);
+        }
+
+        /* New: Simulation Button */
+        .sim-button {
+            margin-top: 15px;
+            background: #27ae60;
+            color: white;
+            padding: 12px 28px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .sim-button:hover {
+            background: #219e50;
+            transform: translateY(-2px);
+        }
+
+        /* Problem Statement Section */
+        .problem-section {
+            padding: 100px 0;
+            background: white;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(45deg, #007acc, #00a8ff);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .problem-content {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Solution Steps */
+        .solution-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 100px;
+            gap: 50px;
+        }
+
+        .step:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .step-content {
+            flex: 1;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .step-content::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #007acc, #00a8ff, #0078d4);
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        .step-number {
+            background: linear-gradient(45deg, #007acc, #00a8ff);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .step-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .step-description {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .tech-highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+
+        .step-video {
+            flex: 1;
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Conclusion Section */
+        .conclusion-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .conclusion-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .conclusion-title {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .conclusion-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .impact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .impact-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            .step {
+                flex-direction: column !important;
+            }
+
+            .step-content, .step-video {
+                flex: none;
+                width: 100%;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .conclusion-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Scroll Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(45deg, #007acc, #00a8ff);
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Bio-Mimetic Turtle Guidance System</h1>
+            <p>Revolutionary IoT Solution Saving Baby Sea Turtles from Light Pollution</p>
+            <a href="#problem" class="cta-button">Discover Our Solution</a>
+            <a href="simulation.html" class="sim-button">View Simulation</a>
+        </div>
+    </section>
+
+    <!-- Problem Statement -->
+    <section class="problem-section" id="problem">
+        <div class="container">
+            <h2 class="section-title">The Critical Problem</h2>
+            <div class="problem-content">
+                <p>Every year, thousands of newly hatched Olive Ridley sea turtles die because of artificial light pollution. These endangered babies naturally follow the brightest light source to reach the ocean, but modern coastal development has created a deadly trap.</p>
+                
+                <p>Street lights, resort lighting, and urban illumination confuse baby turtles, causing them to crawl away from the life-saving ocean and toward dangerous roads and buildings. This phenomenon, called "disorientation," kills up to 80% of hatchlings in heavily developed coastal areas.</p>
+
+                <p>Traditional solutions are expensive, disrupt tourism, or require constant human intervention. We needed a smarter approach that works with turtle biology, not against it.</p>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">80%</div>
+                    <p>Turtle Deaths Due to Light Pollution</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">₹50K</div>
+                    <p>Cost of Traditional Solutions</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <p>Human Monitoring Required</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Steps -->
+    <section class="solution-section">
+        <div class="container">
+            <h2 class="section-title">Our 7-Step IoT Solution</h2>
+
+            <!-- Step 1 -->
+            <div class="step">
+                <div class="step-content">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Smart Hatching Detection</h3>
+                    <p class="step-description">
+                        Our IoT system begins with intelligent detection technology buried around turtle nests. When baby turtles start digging out of the sand, underground piezoelectric sensors detect the tiny vibrations. Motion sensors then confirm the emergence, creating a foolproof detection system.
+                    </p>
+                    <p class="step-description">
+                        This automated approach eliminates the need for 24/7 human monitoring while ensuring no hatching event is missed, even in complete darkness.
+                    </p>
+                    <div class="tech-highlight">
+                        <strong>IoT Technology:</strong> Piezoelectric vibration sensors + PIR motion detectors + Arduino microcontroller for intelligent filtering and false-alarm prevention.
+                    </div>
+                </div>
+                <div class="step-video">
+                    <video autoplay muted loop playsinline>
+                        <source src="videos/video1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step">
+                <div class="step-content">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Instant Alert & System Activation</h3>
+                    <p class="step-description">
+                        The moment turtle emergence is confirmed, our system sends wireless alerts to the guidance lighting network. This happens automatically within 30 seconds of detection, ensuring rapid response when every minute counts.
+                    </p>
+                    <p class="step-description">
+                        The alert system can notify conservation teams via mobile app while simultaneously activating the emergency lighting protocol, providing both automated response and human oversight capabilities.
+                    </p>
+                    <div class="tech-highlight">
+                        <strong>IoT Technology:</strong> Wireless RF communication modules + Mobile app integration + Automated decision-making algorithms for instant system activation.
+                    </div>
+                </div>
+                <div class="step-video">
+                    <video autoplay muted loop playsinline>
+                        <source src="videos/video2.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step">
+                <div class="step-content">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Automated Light Positioning</h3>
+                    <p class="step-description">
+                        Our guidance lights don't just turn on – they intelligently position themselves. Using GPS coordinates and digital compass technology, servo motors automatically rotate each LED fixture to point directly toward the ocean.
+                    </p>
+                    <p class="step-description">
+                        This precision positioning ensures turtles receive clear, unambiguous directional guidance, creating a perfect "highway" from their nest to the safety of ocean waves.
+                    </p>
+                    <div class="tech-highlight">
+                        <strong>IoT Technology:</strong> GPS modules + Digital compass sensors + Servo motor arrays + Precision positioning algorithms for ±5° accuracy toward ocean.
+                    </div>
+                </div>
+                <div class="step-video">
+                    <video autoplay muted loop playsinline>
+                        <source src="videos/video3.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step">
+                <div class="step-content">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Bio-Mimetic Vision Science</h3>
+                    <p class="step-description">
+                        Here's the revolutionary breakthrough: our LEDs emit light at 480-500nm wavelengths, which turtle eyes see 4x brighter than human eyes. To us, these lights appear dim and unobtrusive. To turtles, they create a brilliant pathway impossible to miss.
+                    </p>
+                    <p class="step-description">
+                        This bio-mimetic approach solves the tourism problem – our guidance system works perfectly for turtles while remaining virtually invisible to beachgoers, eliminating complaints about light pollution.
+                    </p>
+                    <div class="tech-highlight">
+                        <strong>IoT Technology:</strong> Custom wavelength LED arrays + Spectral analysis sensors + Automated brightness adjustment based on ambient light conditions.
+                    </div>
+                </div>
+                <div class="step-video">
+                    <video autoplay muted loop playsinline>
+                        <source src="videos/video4.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step">
+                <div class="step-content">
+                    <div class="step-number">5</div>
+                    <h3 class="step-title">Scientific Wavelength Optimization</h3>
+                    <p class="step-description">
+                        Real-time monitoring ensures our system operates at peak efficiency. IoT sensors continuously measure wavelength output, confirming our LEDs maintain the precise 480-500nm spectrum that maximizes turtle visibility while minimizing human disturbance.
+                    </p>
+                    <p class="step-description">
+                        Data analytics track system performance, measuring guidance effectiveness and automatically adjusting intensity based on environmental conditions like moonlight, weather, and competing light sources.
+                    </p>
+                    <div class="tech-highlight">
+                        <strong>IoT Technology:</strong> Spectrometer sensors + Real-time data analytics + Cloud-based performance monitoring + Adaptive brightness control algorithms.
+                    </div>
+                </div>
+                <div class="step-video">
+                    <video autoplay muted loop playsinline>
+                        <source src="videos/video5.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="step">
+                <div class="step-content">
+                    <div class="step-number">6</div>
+                    <h3 class="step-title">Successful Turtle Guidance</h3>
+                    <p class="step-description">
+                        The moment of truth: baby turtles emerge and immediately respond to our bio-mimetic guidance system. Instead of wandering toward dangerous street lights, they follow our precisely positioned LED pathway directly toward ocean safety.
+                    </p>
+                    <p class="step-description">
+                        IoT tracking sensors monitor turtle movement patterns, confirming guidance effectiveness and collecting valuable data for marine conservation research while ensuring each turtle reaches the water safely.
+                    </p>
+                    <div class="tech-highlight">
+                        <strong>IoT Technology:</strong> Infrared tracking cameras + Movement pattern analysis + GPS tracking for conservation research + Automated success rate monitoring.
+                    </div>
+                </div>
+                <div class="step-video">
+                    <video autoplay muted loop playsinline>
+                        <source src="videos/video6.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+
+            <!-- Step 7 -->
+            <div class="step">
+                <div class="step-content">
+                    <div class="step-number">7</div>
+                    <h3 class="step-title">Ocean Arrival & System Reset</h3>
+                    <p class="step-description">
+                        Success! Baby turtles safely enter the ocean, their natural instincts restored by technology. Our IoT system automatically logs the successful guidance event, updates conservation databases, and prepares for the next potential hatching.
+                    </p>
+                    <p class="step-description">
+                        The system returns to standby mode, solar panels recharge batteries, and sensors resume monitoring for future turtle emergences. This fully automated cycle can operate for months without human intervention.
+                    </p>
+                    <div class="tech-highlight">
+                        <strong>IoT Technology:</strong> Automated mission logging + Solar battery management + Cloud data synchronization + Predictive maintenance alerts for long-term operation.
+                    </div>
+                </div>
+                <div class="step-video">
+                    <video autoplay muted loop playsinline>
+                        <source src="videos/video7.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion -->
+    <section class="conclusion-section">
+        <div class="container">
+            <div class="conclusion-content">
+                <h2 class="conclusion-title">Revolutionary Conservation Technology</h2>
+                <p class="conclusion-text">
+                    Our Bio-Mimetic Turtle Guidance System represents a paradigm shift in wildlife conservation. By combining IoT sensor networks, bio-mimetic science, and automated response systems, we've created a solution that saves turtle lives while respecting human communities.
+                </p>
+                <p class="conclusion-text">
+                    This technology demonstrates how understanding animal biology can drive innovation, creating solutions that work with nature rather than against it. Our system proves that effective conservation doesn't require expensive infrastructure or constant human intervention – just smart science and thoughtful engineering.
+                </p>
+
+                <div class="impact-cards">
+                    <div class="impact-card">
+                        <h3>Conservation Impact</h3>
+                        <p>Increases turtle survival from 20% to 90%+ through automated, species-specific guidance technology</p>
+                    </div>
+                    <div class="impact-card">
+                        <h3>Scalable Solution</h3>
+                        <p>IoT architecture enables deployment across multiple beaches with centralized monitoring and management</p>
+                    </div>
+                    <div class="impact-card">
+                        <h3>Research Platform</h3>
+                        <p>Data collection capabilities provide valuable insights for marine biologists and conservation scientists worldwide</p>
+                    </div>
+                    <div class="impact-card">
+                        <h3>Sustainable Technology</h3>
+                        <p>Solar-powered, weather-resistant design ensures years of autonomous operation with minimal maintenance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Scroll progress bar
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const maxHeight = document.body.scrollHeight - window.innerHeight;
+            const progress = (scrolled / maxHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        });
+
+        // Smooth scrolling for CTA button
+        document.querySelector('.cta-button').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.querySelector('#problem').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.step').forEach(step => {
+            observer.observe(step);
+        });
+    </script>
+</body>
+</html>
