@@ -1,8 +1,9 @@
-<img width="1297" height="801" alt="image" src="https://github.com/user-attachments/assets/efd552fc-07e0-4faa-8f85-73174b8a17ef" /># 🐢 Bio-Mimetic Turtle Guidance System
+# 🐢 Bio-Mimetic Turtle Guidance System
 
 > Revolutionary IoT-Based Conservation Solution for Protecting Baby Sea Turtles from Light Pollution
 
-![Project Banner](assets/images/banner.png)
+<img width="1882" height="910" alt="image" src="https://github.com/user-attachments/assets/ba0c85e0-417f-4f5b-9fd8-9f0d8fcaaf52" />
+
 
 ---
 
@@ -29,6 +30,7 @@ The current implementation is a **web-based prototype** developed using HTML, CS
 ---
 
 # 🌍 The Problem
+<img width="1840" height="871" alt="image" src="https://github.com/user-attachments/assets/3954b6db-f3ef-42e3-982b-d822b6e422a3" />
 
 Every year, thousands of baby sea turtles fail to reach the ocean due to coastal light pollution.
 
@@ -89,6 +91,7 @@ The system follows a seven-step workflow:
 # 🔄 7-Step Operational Workflow
 
 ## 1️⃣ Smart Hatching Detection
+<img width="1210" height="650" alt="image" src="https://github.com/user-attachments/assets/33ed01f8-fe76-4bbe-a26b-e49eec36c9fd" />
 
 The process begins with intelligent underground monitoring around turtle nesting areas.
 
@@ -111,6 +114,7 @@ When hatchlings begin digging upward through the sand, vibration sensors detect 
 ---
 
 ## 2️⃣ Instant Alert & System Activation
+<img width="1223" height="678" alt="image" src="https://github.com/user-attachments/assets/e8e19474-96a7-41ea-b391-c81ff01ba875" />
 
 Once emergence is confirmed, the system automatically activates the guidance network.
 
@@ -127,6 +131,7 @@ The controller sends alerts to the lighting network and can optionally notify co
 ---
 
 ## 3️⃣ Automated Light Positioning
+<img width="1288" height="697" alt="image" src="https://github.com/user-attachments/assets/40f382e3-650a-42c3-9391-2057eb7d5e16" />
 
 The guidance lights automatically orient themselves toward the ocean.
 
@@ -143,6 +148,7 @@ The lighting units calculate the ocean direction and rotate automatically to pro
 ---
 
 ## 4️⃣ Bio-Mimetic Vision-Based Guidance
+<img width="1250" height="677" alt="image" src="https://github.com/user-attachments/assets/6b197d93-b6f3-472c-ad2d-ecf932ebd40f" />
 
 The core innovation of the project is wavelength-specific guidance lighting inspired by turtle visual sensitivity.
 
@@ -163,6 +169,7 @@ The system is designed around the hypothesis that specific wavelengths may be si
 ---
 
 ## 5️⃣ Scientific Wavelength Optimization
+<img width="1217" height="767" alt="image" src="https://github.com/user-attachments/assets/92886c38-e247-47cc-b499-fc052576a1d4" />
 
 Environmental conditions continuously change throughout the night.
 
@@ -180,6 +187,7 @@ To maintain optimal guidance conditions under varying weather and lighting envir
 ---
 
 ## 6️⃣ Turtle Guidance & Monitoring
+<img width="1268" height="732" alt="image" src="https://github.com/user-attachments/assets/c4f28932-26c3-4c97-a10f-9bd1092d4abf" />
 
 As hatchlings emerge, the guidance lighting provides a directional pathway toward the ocean.
 
@@ -198,6 +206,7 @@ As hatchlings emerge, the guidance lighting provides a directional pathway towar
 ---
 
 ## 7️⃣ Ocean Arrival & System Reset
+<img width="1295" height="700" alt="image" src="https://github.com/user-attachments/assets/0fdf8065-c1e6-4ac6-a577-12e46c44a47f" />
 
 After successful guidance:
 
